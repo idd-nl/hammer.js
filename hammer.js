@@ -2252,12 +2252,12 @@ var MouseInput = function (_Input) {
     value: function handler(ev) {
       var eventType = MOUSE_INPUT_MAP[ev.type];
 
-      // on start we want to have the left mouse button down
-      if (eventType & INPUT_START && ev.button === 0) {
+      // on start we want to have the any mouse button down
+      if (eventType & INPUT_START && ev.button >= 0) {
         this.pressed = true;
       }
 
-      if (eventType & INPUT_MOVE && ev.which !== 1) {
+      if (eventType & INPUT_MOVE && !ev.which) {
         eventType = INPUT_END;
       }
 
