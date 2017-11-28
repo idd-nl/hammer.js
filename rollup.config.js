@@ -1,10 +1,12 @@
 import babel from 'rollup-plugin-babel';
 
 export default {
-  entry: 'src/main.js',
-  format: 'es',
+  input: 'src/main.js',
   plugins: [ babel({ exclude: 'node_modules/**' }) ],
-  dest: 'hammer.js',
+  output: {
+    file: 'hammer.js',
+    format: 'es',
+  },
   intro: " (function(window, document, exportName, undefined) { \n'use strict';",
   outro: "})(window, document, 'Hammer');"
 };

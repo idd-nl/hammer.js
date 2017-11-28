@@ -32,7 +32,8 @@
   },
   "dependencies": {},
   "devDependencies": {
-    "babel-preset-es2015-rollup": "^1.1.1",
+    "babel-core": "^6.26.0",
+    "babel-preset-es2015-rollup": "*",
     "bannerize": "^1.0.2",
     "blanket": "^1.2.3",
     "changelogplease": "^1.2.0",
@@ -47,8 +48,8 @@
     "lodash-compat": "^3.10.2",
     "node-qunit-phantomjs": "^1.4.0",
     "qunitjs": "^2.0.0",
-    "rollup": "^0.36.0",
-    "rollup-plugin-babel": "^2.4.0",
+    "rollup": "*",
+    "rollup-plugin-babel": "*",
     "run-when-changed": "^1.2.0",
     "serve": "^1.4.0",
     "uglify-js": "^2.7.0"

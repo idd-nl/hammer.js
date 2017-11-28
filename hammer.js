@@ -1,10 +1,11 @@
-/*! Hammer.JS - v2.0.8 - 2016-09-30
+/*! Hammer.JS - v2.0.8 - 2017-11-28
  * http://hammerjs.github.io/
  *
  * Copyright (c)  Jorik Tangelder;
  * Licensed under the MIT license */
 (function(window, document, exportName, undefined) { 
 'use strict';
+
 /**
  * @private
  * use the val2 when val1 is undefined
@@ -237,118 +238,15 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
   return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
 };
 
-var asyncGenerator = function () {
-  function AwaitValue(value) {
-    this.value = value;
-  }
 
-  function AsyncGenerator(gen) {
-    var front, back;
 
-    function send(key, arg) {
-      return new Promise(function (resolve, reject) {
-        var request = {
-          key: key,
-          arg: arg,
-          resolve: resolve,
-          reject: reject,
-          next: null
-        };
 
-        if (back) {
-          back = back.next = request;
-        } else {
-          front = back = request;
-          resume(key, arg);
-        }
-      });
-    }
 
-    function resume(key, arg) {
-      try {
-        var result = gen[key](arg);
-        var value = result.value;
 
-        if (value instanceof AwaitValue) {
-          Promise.resolve(value.value).then(function (arg) {
-            resume("next", arg);
-          }, function (arg) {
-            resume("throw", arg);
-          });
-        } else {
-          settle(result.done ? "return" : "normal", result.value);
-        }
-      } catch (err) {
-        settle("throw", err);
-      }
-    }
 
-    function settle(type, value) {
-      switch (type) {
-        case "return":
-          front.resolve({
-            value: value,
-            done: true
-          });
-          break;
 
-        case "throw":
-          front.reject(value);
-          break;
 
-        default:
-          front.resolve({
-            value: value,
-            done: false
-          });
-          break;
-      }
 
-      front = front.next;
-
-      if (front) {
-        resume(front.key, front.arg);
-      } else {
-        back = null;
-      }
-    }
-
-    this._invoke = send;
-
-    if (typeof gen.return !== "function") {
-      this.return = undefined;
-    }
-  }
-
-  if (typeof Symbol === "function" && Symbol.asyncIterator) {
-    AsyncGenerator.prototype[Symbol.asyncIterator] = function () {
-      return this;
-    };
-  }
-
-  AsyncGenerator.prototype.next = function (arg) {
-    return this._invoke("next", arg);
-  };
-
-  AsyncGenerator.prototype.throw = function (arg) {
-    return this._invoke("throw", arg);
-  };
-
-  AsyncGenerator.prototype.return = function (arg) {
-    return this._invoke("return", arg);
-  };
-
-  return {
-    wrap: function (fn) {
-      return function () {
-        return new AsyncGenerator(fn.apply(this, arguments));
-      };
-    },
-    await: function (value) {
-      return new AwaitValue(value);
-    }
-  };
-}();
 
 var classCallCheck = function (instance, Constructor) {
   if (!(instance instanceof Constructor)) {
@@ -373,6 +271,12 @@ var createClass = function () {
     return Constructor;
   };
 }();
+
+
+
+
+
+
 
 var get = function get(object, property, receiver) {
   if (object === null) object = Function.prototype;
@@ -415,6 +319,16 @@ var inherits = function (subClass, superClass) {
   if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
 };
 
+
+
+
+
+
+
+
+
+
+
 var possibleConstructorReturn = function (self, call) {
   if (!self) {
     throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
@@ -422,6 +336,10 @@ var possibleConstructorReturn = function (self, call) {
 
   return call && (typeof call === "object" || typeof call === "function") ? call : self;
 };
+
+
+
+
 
 var slicedToArray = function () {
   function sliceIterator(arr, i) {
@@ -576,7 +494,7 @@ var Recognizer = function () {
 
   createClass(Recognizer, [{
     key: 'set',
-    value: function set(options) {
+    value: function set$$1(options) {
       assign$1(this.options, options);
 
       // also update the touchAction, in case something changed about the directions/enabled state
@@ -1507,7 +1425,7 @@ var TouchAction = function () {
 
   createClass(TouchAction, [{
     key: 'set',
-    value: function set(value) {
+    value: function set$$1(value) {
       // find out the touch-action by the event handlers
       if (value === TOUCH_ACTION_COMPUTE) {
         value = this.compute();
@@ -1849,8 +1767,8 @@ function computeInputData(manager, input) {
     session.firstMultiple = false;
   }
 
-  var firstInput = session.firstInput;
-  var firstMultiple = session.firstMultiple;
+  var firstInput = session.firstInput,
+      firstMultiple = session.firstMultiple;
 
   var offsetCenter = firstMultiple ? firstMultiple.center : firstInput.center;
 
@@ -2448,25 +2366,20 @@ function recordTouches(eventType, eventData) {
 }
 
 function setLastTouch(eventData) {
-  var _this2 = this;
-
-  var _eventData$changedPoi = slicedToArray(eventData.changedPointers, 1);
-
-  var touch = _eventData$changedPoi[0];
+  var _eventData$changedPoi = slicedToArray(eventData.changedPointers, 1),
+      touch = _eventData$changedPoi[0];
 
   if (touch.identifier === this.primaryTouch) {
-    (function () {
-      var lastTouch = { x: touch.clientX, y: touch.clientY };
-      _this2.lastTouches.push(lastTouch);
-      var lts = _this2.lastTouches;
-      var removeLastTouch = function removeLastTouch() {
-        var i = lts.indexOf(lastTouch);
-        if (i > -1) {
-          lts.splice(i, 1);
-        }
-      };
-      setTimeout(removeLastTouch, DEDUP_TIMEOUT);
-    })();
+    var lastTouch = { x: touch.clientX, y: touch.clientY };
+    this.lastTouches.push(lastTouch);
+    var lts = this.lastTouches;
+    var removeLastTouch = function removeLastTouch() {
+      var i = lts.indexOf(lastTouch);
+      if (i > -1) {
+        lts.splice(i, 1);
+      }
+    };
+    setTimeout(removeLastTouch, DEDUP_TIMEOUT);
   }
 }
 
@@ -2559,7 +2472,7 @@ var Manager = function () {
 
   createClass(Manager, [{
     key: 'set',
-    value: function set(options) {
+    value: function set$$1(options) {
       assign$1(this.options, options);
 
       // Options that need a little more setup
@@ -2662,7 +2575,7 @@ var Manager = function () {
 
   }, {
     key: 'get',
-    value: function get(recognizer) {
+    value: function get$$1(recognizer) {
       if (recognizer instanceof Recognizer) {
         return recognizer;
       }
@@ -3226,6 +3139,9 @@ assign$1(Hammer, {
   removeEventListeners: removeEventListeners
 });
 
+var freeGlobal = typeof window !== 'undefined' ? window : typeof self !== 'undefined' ? self : {}; // jshint ignore:line
+freeGlobal.Hammer = Hammer;
+
 /* jshint ignore:start */
 if (typeof define === 'function' && define.amd) {
   define(function () {
@@ -3237,4 +3153,5 @@ if (typeof define === 'function' && define.amd) {
   window[exportName] = Hammer;
 }
 /* jshint ignore:end */
+
 })(window, document, 'Hammer');
